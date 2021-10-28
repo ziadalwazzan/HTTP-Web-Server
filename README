@@ -1,0 +1,28 @@
+Author: Ziad AlWazzan
+
+Description:
+This is a multithreaded HTTP/1.1 web server implemented using TCP sockets. The server supports GET and POST requests along with error handling for both. If an error occurs the server will respond with a 500 error.
+
+
+////////////////////////////////////////////////////////////
+
+
+To run:
+gcc httpechosrv.c -o server
+./server <PORT#>
+
+Then open browser on:
+localhost:<PORT#>/
+
+To test error handling include a non-existent path in the URL like:
+localhost:<PORT#>/helloworld.html
+
+POST:
+(echo -en "POST /index.html HTTP/1.1\r\nHost: localhost\r\nConnection: Keep-alive\r\n\r\nPOSTDATA") | nc 127.0.0.1 8888
+
+
+////////////////////////////////////////////////////////////
+
+
+Future improvements:
+A way to improve this server is by implementing pipelining. This will highly improve wait times between requests resulting in aggregated throughput. To implement this feature the server must check the connection status of the request and if it was keep-alive the timeout value will be reset to keep the connection alive until the timeout has passed then the server will reply with a closed connection status and close the socket.
